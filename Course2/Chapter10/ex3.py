@@ -1,6 +1,6 @@
-# this program revises the one from Chapter9 ex5.py. It counts the distribution of the hour of the day for each of the messages. To do so, it pulls the hour from the 'From' line by finding the time string and then splitting that string into parts using the colon character. Once it has accumulated the counts for each hour, it prints out the counts, one per line.
+# this program reads a file and prints the letters in decreasing order of frequency. It converts all the input to lower case and only counts the letters a-z. It does not count spaces, digits, punctuation, or anything other than the letters a-z. 
 
-fname = 'mbox-short.txt'
+fname = 'words.txt'
 fhand = open(fname)
 # fname = raw_input('Enter a file name: ')
 # try:

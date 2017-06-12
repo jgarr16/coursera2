@@ -1,35 +1,23 @@
-# this program revises the one from Chapter9 ex4.py. Read and parse the 'From' lines and pull out the addresses from the line. Count the number of messages from each person using a dictionary. After all the data has been read, print the person with the most commits by creating a list of (count, email) tuples from the dictionary. Then sort the list in reverse order and print out the person who has the most commits.
+# this program simulates the operation of the grep command on Unix. It asks the user to enter a regular expression and then counts the number of lines that matched the regular expression
 
-fname = raw_input('Enter a file name: ')
+import re
+
+grepreq = raw_input('Enter a regular expression: ')
+#print grepreq, type(grepreq)        # this just for testing, feel free to delete
+text = open('mbox.txt')
+runcount = 0
 try:
-	fhand = open(fname)
+	for line in text:
+		line = line.rstrip()
+		x = re.findall(grepreq, line)
+		if len(x) > 0 : 
+			# print x
+			# print line      # this just for testing, feel free to delete
+			runcount += 1
 except:
-	print 'Sorry, can\'t find that file. Please try again.'
+	print 'Sorry, I can\'t run that generalized regular expression parser. Please try again.'
 	exit()
 
-daycount = dict()
-for line in fhand:
-    words = line.split()
-    if (len(words) >= 2) and (words[0] == 'From'): 
-		if words[1] not in daycount: daycount[words[1]] = 1
-		else: daycount[words[1]] += 1
 
-# print daycount      # this just for testing, feel free to delete
-
-# sort the dict() by value
-lst = list()
-for email, count in daycount.items():
-	lst.append((count,email))
-
-lst.sort(reverse=True)
-
-for count, email in lst[:1]:
-	print email, count
-
-# maximum = max(daycount, key=daycount.get)  # this works, but not acceptable for class solution
-# print maximum, daycount[maximum]
-
-# maximum = max(daycount.values())
-# maxkey = [key for key, value in daycount.items() if value == maximum]
-# print maxkey[0], maximum
+print 'mbox.txt had',runcount, 'lines that matched', grepreq
 

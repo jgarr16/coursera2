@@ -7,4 +7,3 @@ print
 for line in fhand:
 	print line.strip()
 print
-

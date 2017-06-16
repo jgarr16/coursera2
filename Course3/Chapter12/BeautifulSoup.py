@@ -2,67 +2,50 @@
 Elixir and Tonic
 "The Screen-Scraper's Friend"
 http://www.crummy.com/software/BeautifulSoup/
-
 Beautiful Soup parses a (possibly invalid) XML or HTML document into a
 tree representation. It provides methods and Pythonic idioms that make
 it easy to navigate, search, and modify the tree.
-
 A well-formed XML/HTML document yields a well-formed data
 structure. An ill-formed XML/HTML document yields a correspondingly
 ill-formed data structure. If your document is only locally
 well-formed, you can use this library to find and process the
 well-formed part of it.
-
 Beautiful Soup works with Python 2.2 and up. It has no external
 dependencies, but you'll have more success at converting data to UTF-8
 if you also install these three packages:
-
 * chardet, for auto-detecting character encodings
   http://chardet.feedparser.org/
 * cjkcodecs and iconv_codec, which add more encodings to the ones supported
   by stock Python.
   http://cjkpython.i18n.org/
-
 Beautiful Soup defines classes for two main parsing strategies:
-
  * BeautifulStoneSoup, for parsing XML, SGML, or your domain-specific
    language that kind of looks like XML.
-
  * BeautifulSoup, for parsing run-of-the-mill HTML code, be it valid
    or invalid. This class has web browser-like heuristics for
    obtaining a sensible parse tree in the face of common HTML errors.
-
 Beautiful Soup also defines a class (UnicodeDammit) for autodetecting
 the encoding of an HTML or XML document, and converting it to
 Unicode. Much of this code is taken from Mark Pilgrim's Universal Feed Parser.
-
 For more than you ever wanted to know about Beautiful Soup, see the
 documentation:
 http://www.crummy.com/software/BeautifulSoup/documentation.html
-
 Here, have some legalese:
-
 Copyright (c) 2004-2010, Leonard Richardson
-
 All rights reserved.
-
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
-
   * Redistributions of source code must retain the above copyright
     notice, this list of conditions and the following disclaimer.
-
   * Redistributions in binary form must reproduce the above
     copyright notice, this list of conditions and the following
     disclaimer in the documentation and/or other materials provided
     with the distribution.
-
   * Neither the name of the the Beautiful Soup Consortium and All
     Night Kosher Bakery nor the names of its contributors may be
     used to endorse or promote products derived from this software
     without specific prior written permission.
-
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -74,7 +57,6 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
 LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE, DAMMIT.
-
 """
 from __future__ import generators
 
@@ -425,7 +407,6 @@ class NavigableString(unicode, PageElement):
 
     def __new__(cls, value):
         """Create a new NavigableString.
-
         When unpickling a NavigableString, this method is called with
         the string in DEFAULT_OUTPUT_ENCODING. That encoding needs to be
         passed in to the superclass's __new__ or the superclass won't know
@@ -655,7 +636,6 @@ class Tag(PageElement):
     def __eq__(self, other):
         """Returns true iff this tag has the same name, the same attributes,
         and the same contents (recursively) as the given tag.
-
         NOTE: right now this will return false if two tags have the
         same attributes in a different order. Should this be fixed?"""
         if other is self:
@@ -692,7 +672,6 @@ class Tag(PageElement):
                 prettyPrint=False, indentLevel=0):
         """Returns a string or Unicode representation of this tag and
         its contents. To get Unicode, pass None for encoding.
-
         NOTE: since Python's HTML parser consumes whitespace, this
         method is not certain to reproduce the whitespace present in
         the original string."""
@@ -832,7 +811,6 @@ class Tag(PageElement):
         """Extracts a list of Tag objects that match the given
         criteria.  You can specify the name of the Tag and any
         attributes you want the Tag to have.
-
         The value of a key-value pair in the 'attrs' map can be a
         string, a list of strings, a regular expression object, or a
         callable that takes a string and returns whether or not the
@@ -1036,15 +1014,12 @@ class BeautifulStoneSoup(Tag, SGMLParser):
     """This class contains the basic parser and search code. It defines
     a parser that knows nothing about tag behavior except for the
     following:
-
       You can't close a tag without closing all the tags it encloses.
       That is, "<foo><bar></foo>" actually means
       "<foo><bar></bar></foo>".
-
     [Another possible explanation is "<foo><bar /></foo>", but since
     this class defines no SELF_CLOSING_TAGS, it will never use that
     explanation.]
-
     This class is useful for parsing XML or made-up markup languages,
     or when BeautifulSoup makes an assumption counter to what you were
     expecting."""
@@ -1081,24 +1056,19 @@ class BeautifulStoneSoup(Tag, SGMLParser):
         """The Soup object is initialized as the 'root tag', and the
         provided markup (which can be a string or a file-like object)
         is fed into the underlying parser.
-
         sgmllib will process most bad HTML, and the BeautifulSoup
         class has some tricks for dealing with some HTML that kills
         sgmllib, but Beautiful Soup can nonetheless choke or lose data
         if your data uses self-closing tags or declarations
         incorrectly.
-
         By default, Beautiful Soup uses regexes to sanitize input,
         avoiding the vast majority of these problems. If the problems
         don't apply to you, pass in False for markupMassage, and
         you'll get better performance.
-
         The default parser massage techniques fix the two most common
         instances of invalid HTML that choke sgmllib:
-
          <br/> (No space between name of closing tag and tag close)
          <! --Comment--> (Extraneous whitespace in declaration)
-
         You can pass in a custom list of (RE object, replace method)
         tuples to get Beautiful Soup to scrub your input the way you
         want."""
@@ -1283,12 +1253,10 @@ class BeautifulStoneSoup(Tag, SGMLParser):
         tag and the previous tag of this type, OR unless this tag is a
         generic nesting trigger and another generic nesting trigger
         comes between this tag and the previous tag of this type.
-
         Examples:
          <p>Foo<b>Bar *<p>* should pop to 'p', not 'b'.
          <p>Foo<table>Bar *<p>* should pop to 'table', not 'p'.
          <p>Foo<table><tr>Bar *<p>* should pop to 'tr', not 'p'.
-
          <li><ul><li> *<li>* should pop to 'ul', not the first 'li'.
          <tr><table><tr> *<tr>* should pop to 'table', not the first 'tr'
          <td><tr><td> *<td>* should pop to 'tr', not the first 'td'
@@ -1465,37 +1433,28 @@ class BeautifulStoneSoup(Tag, SGMLParser):
 class BeautifulSoup(BeautifulStoneSoup):
 
     """This parser knows the following facts about HTML:
-
     * Some tags have no closing tag and should be interpreted as being
       closed as soon as they are encountered.
-
     * The text inside some tags (ie. 'script') may contain tags which
       are not really part of the document and which should be parsed
       as text, not tags. If you want to parse the text as tags, you can
       always fetch it and parse it explicitly.
-
     * Tag nesting rules:
-
       Most tags can't be nested at all. For instance, the occurance of
       a <p> tag should implicitly close the previous <p> tag.
-
        <p>Para1<p>Para2
         should be transformed into:
        <p>Para1</p><p>Para2
-
       Some tags can be nested arbitrarily. For instance, the occurance
       of a <blockquote> tag should _not_ implicitly close the previous
       <blockquote> tag.
-
        Alice said: <blockquote>Bob said: <blockquote>Blah
         should NOT be transformed into:
        Alice said: <blockquote>Bob said: </blockquote><blockquote>Blah
-
       Some tags can be nested, but the nesting is reset by the
       interposition of other tags. For instance, a <tr> tag should
       implicitly close the previous <tr> tag within the same <table>,
       but not close a <tr> tag in another table.
-
        <table><tr>Blah<tr>Blah
         should be transformed into:
        <table><tr>Blah</tr><tr>Blah
@@ -1503,7 +1462,6 @@ class BeautifulSoup(BeautifulStoneSoup):
        <tr>Blah<table><tr>Blah
         should NOT be transformed into
        <tr>Blah<table></tr><tr>Blah
-
     Differing assumptions about tag nesting rules are a major source
     of problems with the BeautifulSoup class. If BeautifulSoup is not
     treating as nestable a tag your page author treats as nestable,
@@ -1623,9 +1581,7 @@ class ICantBelieveItsBeautifulSoup(BeautifulSoup):
     """The BeautifulSoup class is oriented towards skipping over
     common HTML errors like unclosed tags. However, sometimes it makes
     errors of its own. For instance, consider this fragment:
-
      <b>Foo<b>Bar</b></b>
-
     This is perfectly valid (if bizarre) HTML. However, the
     BeautifulSoup class will implicitly close the first b tag when it
     encounters the second 'b'. It will think the author wrote
@@ -1635,7 +1591,6 @@ class ICantBelieveItsBeautifulSoup(BeautifulSoup):
     tags, for a grand total of three tags closed instead of two. This
     can throw off the rest of your document structure. The same is
     true of a number of other tags, listed below.
-
     It's much more common for someone to forget to close a 'b' tag
     than to actually use nested 'b' tags, and the BeautifulSoup class
     handles the common case. This class handles the not-co-common
@@ -1660,7 +1615,6 @@ class MinimalSoup(BeautifulSoup):
     nesting, but it does know which tags are self-closing, that
     <script> tags contain Javascript and should not be parsed, that
     META tags may contain encoding information, and so on.
-
     This also makes it better for subclassing than BeautifulStoneSoup
     or BeautifulSoup."""
 
@@ -1672,18 +1626,14 @@ class BeautifulSOAP(BeautifulStoneSoup):
     the tag's parent as an attribute. The attribute's name is the tag
     name, and the value is the string child. An example should give
     the flavor of the change:
-
     <foo><bar>baz</bar></foo>
      =>
     <foo bar="baz"><bar>baz</bar></foo>
-
     You can then access fooTag['bar'] instead of fooTag.barTag.string.
-
     This is, of course, useful for scraping structures that tend to
     use subelements instead of attributes, such as SOAP messages. Note
     that it modifies its input, so don't print the modified version
     out.
-
     I'm not sure how many people really want to use this class; let me
     know if you do. Mainly I like the name."""
 

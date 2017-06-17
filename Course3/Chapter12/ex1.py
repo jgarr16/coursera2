@@ -1,23 +1,23 @@
-# this program simulates the operation of the grep command on Unix. It asks the user to enter a regular expression and then counts the number of lines that matched the regular expression
+# this program acts as a simple web server
 
-import re
+import socket
 
-grepreq = raw_input('Enter a regular expression: ')
-#print grepreq, type(grepreq)        # this just for testing, feel free to delete
-text = open('mbox.txt')
-runcount = 0
+get_url = raw_input('Input your URL: ')   # http://data.pr4e.org/romeo.txt
 try:
-	for line in text:
-		line = line.rstrip()
-		x = re.findall(grepreq, line)
-		if len(x) > 0 : 
-			# print x
-			# print line      # this just for testing, feel free to delete
-			runcount += 1
+	domain_url = get_url.split('/')[2]
 except:
-	print 'Sorry, I can\'t run that generalized regular expression parser. Please try again.'
+	print '\nSorry, that URL doesn\'t resolve!\n'
 	exit()
+# print domain_url
+mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+mysock.connect((domain_url, 80))
+mysock.send('GET http://' + domain_url +' HTTP/1.0\n\n') 
 
 
-print 'mbox.txt had',runcount, 'lines that matched', grepreq
+while True:
+	data = mysock.recv(512)
+	if (len(data) <1):
+		break
+	print data
 
+mysock.close()

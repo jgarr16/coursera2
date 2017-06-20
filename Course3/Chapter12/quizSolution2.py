@@ -6,19 +6,22 @@ import urllib
 from BeautifulSoup import *
 
 url = raw_input('Enter URL: ')
-count = raw_input('Enter count: ')
-counted = 0
-position = raw_input('Enter position: ')
+count = int(raw_input('Enter count: '))+1
+position = int(raw_input('Enter position: '))-1
 urllist = list()
+# print count
+# print url
 
-html = urllib.urlopen(url).read()
-soup = BeautifulSoup(html)
+for i in range(int(count)):
+	print url
+	html = urllib.urlopen(url).read()
+	soup = BeautifulSoup(html)
 
-# Retrieve all of the anchor tags
-tags = soup('a')
-for tag in tags:
-	while counted <= count:
-		counted = counted + 1
-    	
-    	urllist.append(tag.get('href', None))
-    	print urllist[3]
+	tags = soup('a')
+	for tag in tags:
+		urllist.append(tag.get('href', None))
+	# print urllist[int(position)]
+	url = urllist[int(position)]
+	urllist = []
+	# print '# 2',url
+

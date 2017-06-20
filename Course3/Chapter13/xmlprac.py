@@ -1,12 +1,12 @@
-# xml.py
+# xmlprac.py
 
 import xml.etree.ElementTree as ET
 
 data = """
 <person>
-  <name>Chuck</name>
+  <name>John</name>
   <phone type="intl">
-     +1 734 303 4456
+     +1 919 607 5268
    </phone>
    <email hide="yes"/>
 </person>"""

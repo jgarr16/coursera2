@@ -16,7 +16,7 @@ while True:
 	uh = urllib.urlopen(url)
 	data = uh.read()
 	print 'Retrieved', len(data), 'characters' 
-
+ 
 	try: js = json.loads(str(data))
 	except: js = None
 	if 'status' not in js or js['status'] != 'OK' :

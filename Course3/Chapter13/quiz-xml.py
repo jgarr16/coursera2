@@ -1,3 +1,5 @@
+# this program will prompt for a URL, read the XML data from that URL using urllib and then parse and extract the comment counts from the XML data, compute the sum of the numbers in the file and enter the sum
+
 import urllib
 import xml.etree.ElementTree as ET
 
@@ -17,11 +19,3 @@ for item in lst:
 print summer
 
 
-# results = tree.findall('commentinfo')
-# nums = results.find('comments').find('comment').find('count').text
-#counts = tree.findall('tree')
-# lng = results[0].find('geometry').find('location').find('lng').text
-# location = results[0].find('formatted_address').text
-#print count
-# print 'nums: ',nums
-# print location

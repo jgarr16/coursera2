@@ -2,12 +2,14 @@
 
 def namePrompt():
 	name = input('What is your name? ')
-	
 	if len(name) < 1:
 		print()
 		print('Cat got your tongue? Try again!')
 		print()
 	else:
+		nameResponse(name)
+
+def nameResponse(name):
 		try:
 			print()
 			print('Hello ' + name)

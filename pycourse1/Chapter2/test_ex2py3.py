@@ -1,19 +1,14 @@
 # test_ex2py3.py 
 
-from unittest.mock import patch
-from unittest import TestCase
-import ex2py3
+import unittest
+from ex2py3 import nameResponse
 
-class NamePromptTestCase(TestCase):
+class PrimesTestCase(unittest.TestCase):
+	"""Tests for 'ex2py3.py'."""
 
-	"""Tests for the name 'John' in 'ex2py3.py'."""
-	@patch('ex2py3.get_input', return_value='John')
-	def test_for_name_John(self, input):
-		self.assertEqual(namePrompt(), 'Hello John')
-	
+	def test_name_John(self):
+		"""Is 'John' the outputted name?"""
+		self.assertFalse(nameResponse('John'), msg='Hello John')
 
-	"""Tests for a blank entry in 'ex2py3.py'."""
-	@patch('ex2py3.get_input', return_value='')
-	def test_for_no_name(self, input):
-		self.assertEqual(namePrompt(), 'Cat got your tongue? Try again!')
-
+if __name__ == '__main__':
+	unittest.main()
